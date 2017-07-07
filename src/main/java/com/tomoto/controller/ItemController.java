@@ -16,7 +16,7 @@ import com.tomoto.utils.APIUtil;
 
 @RestController
 @RequestMapping(value="/item")
-public class UserController {
+public class ItemController {
 	
 	@Autowired
 	private ItemService service;
