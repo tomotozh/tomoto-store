@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tomoto.mapper.TbItemMapper" >
+  <resultMap id="BaseResultMap" type="com.tomoto.pojo.TbItem" >
+    <id column="item_id" property="itemId" jdbcType="INTEGER" />
+    <result column="item_title" property="itemTitle" jdbcType="VARCHAR" />
+    <result column="item_desc" property="itemDesc" jdbcType="VARCHAR" />
+    <result column="item_catogery" property="itemCatogery" jdbcType="VARCHAR" />
+    <result column="item_press" property="itemPress" jdbcType="VARCHAR" />
+    <result column="item_price" property="itemPrice" jdbcType="VARCHAR" />
+    <result column="item_pack" property="itemPack" jdbcType="VARCHAR" />
+    <result column="item_date" property="itemDate" jdbcType="DOUBLE" />
+    <result column="item_grade" property="itemGrade" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    item_id, item_title, item_desc, item_catogery, item_press, item_price, item_pack, 
+    item_date, item_grade
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tomoto.pojo.TbItemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_item
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_item
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tomoto.pojo.TbItemExample" >
+    delete from tb_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tomoto.pojo.TbItem" >
+    insert into tb_item (item_id, item_title, item_desc, 
+      item_catogery, item_press, item_price, 
+      item_pack, item_date, item_grade
+      )
+    values (#{itemId,jdbcType=INTEGER}, #{itemTitle,jdbcType=VARCHAR}, #{itemDesc,jdbcType=VARCHAR}, 
+      #{itemCatogery,jdbcType=VARCHAR}, #{itemPress,jdbcType=VARCHAR}, #{itemPrice,jdbcType=VARCHAR}, 
+      #{itemPack,jdbcType=VARCHAR}, #{itemDate,jdbcType=DOUBLE}, #{itemGrade,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tomoto.pojo.TbItem" >
+    insert into tb_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="itemTitle != null" >
+        item_title,
+      </if>
+      <if test="itemDesc != null" >
+        item_desc,
+      </if>
+      <if test="itemCatogery != null" >
+        item_catogery,
+      </if>
+      <if test="itemPress != null" >
+        item_press,
+      </if>
+      <if test="itemPrice != null" >
+        item_price,
+      </if>
+      <if test="itemPack != null" >
+        item_pack,
+      </if>
+      <if test="itemDate != null" >
+        item_date,
+      </if>
+      <if test="itemGrade != null" >
+        item_grade,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="itemTitle != null" >
+        #{itemTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="itemDesc != null" >
+        #{itemDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCatogery != null" >
+        #{itemCatogery,jdbcType=VARCHAR},
+      </if>
+      <if test="itemPress != null" >
+        #{itemPress,jdbcType=VARCHAR},
+      </if>
+      <if test="itemPrice != null" >
+        #{itemPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="itemPack != null" >
+        #{itemPack,jdbcType=VARCHAR},
+      </if>
+      <if test="itemDate != null" >
+        #{itemDate,jdbcType=DOUBLE},
+      </if>
+      <if test="itemGrade != null" >
+        #{itemGrade,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tomoto.pojo.TbItemExample" resultType="java.lang.Integer" >
+    select count(*) from tb_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_item
+    <set >
+      <if test="record.itemId != null" >
+        item_id = #{record.itemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemTitle != null" >
+        item_title = #{record.itemTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemDesc != null" >
+        item_desc = #{record.itemDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemCatogery != null" >
+        item_catogery = #{record.itemCatogery,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemPress != null" >
+        item_press = #{record.itemPress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemPrice != null" >
+        item_price = #{record.itemPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemPack != null" >
+        item_pack = #{record.itemPack,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemDate != null" >
+        item_date = #{record.itemDate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.itemGrade != null" >
+        item_grade = #{record.itemGrade,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_item
+    set item_id = #{record.itemId,jdbcType=INTEGER},
+      item_title = #{record.itemTitle,jdbcType=VARCHAR},
+      item_desc = #{record.itemDesc,jdbcType=VARCHAR},
+      item_catogery = #{record.itemCatogery,jdbcType=VARCHAR},
+      item_press = #{record.itemPress,jdbcType=VARCHAR},
+      item_price = #{record.itemPrice,jdbcType=VARCHAR},
+      item_pack = #{record.itemPack,jdbcType=VARCHAR},
+      item_date = #{record.itemDate,jdbcType=DOUBLE},
+      item_grade = #{record.itemGrade,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tomoto.pojo.TbItem" >
+    update tb_item
+    <set >
+      <if test="itemTitle != null" >
+        item_title = #{itemTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="itemDesc != null" >
+        item_desc = #{itemDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCatogery != null" >
+        item_catogery = #{itemCatogery,jdbcType=VARCHAR},
+      </if>
+      <if test="itemPress != null" >
+        item_press = #{itemPress,jdbcType=VARCHAR},
+      </if>
+      <if test="itemPrice != null" >
+        item_price = #{itemPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="itemPack != null" >
+        item_pack = #{itemPack,jdbcType=VARCHAR},
+      </if>
+      <if test="itemDate != null" >
+        item_date = #{itemDate,jdbcType=DOUBLE},
+      </if>
+      <if test="itemGrade != null" >
+        item_grade = #{itemGrade,jdbcType=INTEGER},
+      </if>
+    </set>
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tomoto.pojo.TbItem" >
+    update tb_item
+    set item_title = #{itemTitle,jdbcType=VARCHAR},
+      item_desc = #{itemDesc,jdbcType=VARCHAR},
+      item_catogery = #{itemCatogery,jdbcType=VARCHAR},
+      item_press = #{itemPress,jdbcType=VARCHAR},
+      item_price = #{itemPrice,jdbcType=VARCHAR},
+      item_pack = #{itemPack,jdbcType=VARCHAR},
+      item_date = #{itemDate,jdbcType=DOUBLE},
+      item_grade = #{itemGrade,jdbcType=INTEGER}
+    where item_id = #{itemId,jdbcType=INTEGER}
+  </update>
+</mapper>

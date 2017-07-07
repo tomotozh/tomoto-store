@@ -1,0 +1,56 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	<!-- 事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- 数据源 -->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 通知，特定方法名开启事务，通知表示做什么和何时做(做的前提条件)，这里做什么表示开启事务，何时做表示在目标方法为指定形式的方法时执行！ -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 传播行为 -->
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="create*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="select*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="search*" propagation="SUPPORTS" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 所有的切面都在这里面配置！不管多少个切面！ -->
+	<aop:config>
+		<!-- 这是事务的切面 -->
+		<!-- 切面，将事务定义为切面，在指定为切点的连接点处执行切面 -->
+		<!-- 引入txAdvice通知，加上切点属性，一起构成切面！所以切面包括通知和切点！ -->
+		<aop:advisor advice-ref="txAdvice"
+			pointcut="execution(* com.tomoto.service.*.*(..))" /><!-- 切点，指定切点(连接点的子集)，表示何处执行切面的方法！ -->
+		
+		
+		<!-- 这是测试的切面！ -->
+		<!-- 切面 -->
+		<!-- <aop:aspect ref="testAspect">
+			切点
+			<aop:pointcut expression="execution(* com.tomoto.controller.*.*(..))" id="service"/>
+			通知，这里是前置通知
+			<aop:after-throwing pointcut-ref="service" method="print"/>
+		</aop:aspect> -->
+	</aop:config>
+	
+	<!-- 启动自动代理，当使用了AspectJ注解的时候要开启这个自动代理！ -->
+	<!-- <aop:aspectj-autoproxy></aop:aspectj-autoproxy> -->
+	
+	
+	
+</beans>
