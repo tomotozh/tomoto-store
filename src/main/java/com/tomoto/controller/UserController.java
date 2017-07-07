@@ -15,16 +15,12 @@ import com.tomoto.utils.APIResult;
 import com.tomoto.utils.APIUtil;
 
 @RestController
-@RequestMapping(value="/user")
+@RequestMapping(value="/item")
 public class UserController {
 	
 	@Autowired
 	private ItemService service;
 
-	@RequestMapping(value="/get")
-	public Object getUser(){
-		return "{'xxx':'yyy'}";
-	}
 	
 	@RequestMapping(value="/list")
 	public ACEResult listAll(){
@@ -36,6 +32,7 @@ public class UserController {
 		}
 	}
 	
+	//测试分词接口
 	@RequestMapping(value="/word")
 	public ACEResult getWords(@RequestParam(value="text") String text) throws UnsupportedEncodingException{
 		System.out.println("param:"+text);
