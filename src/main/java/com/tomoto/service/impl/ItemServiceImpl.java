@@ -1,6 +1,8 @@
 package com.tomoto.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -40,22 +42,12 @@ public class ItemServiceImpl implements ItemService {
 		jedisClient.set(list);
 		for(TbItem item : list){
 			//category
-			if(item.getItemCatogery().contains("Java")){
-				String key = REDIS_BASE_URL + "Java";
-				jedisClient.sadd(key, item.getItemId().toString());
-			}else{
-				String key = REDIS_BASE_URL + "Python";
-				jedisClient.sadd(key, item.getItemId().toString());
-			}
+			String ckey = REDIS_BASE_URL + item.getItemCatogery();
+			jedisClient.sadd(ckey, item.getItemId().toString());
 			
 			//press
-			if(item.getItemPress().contains("人民邮电出版社")){
-				String key = REDIS_BASE_URL + "人民邮电出版社";
-				jedisClient.sadd(key, item.getItemId().toString());
-			}else{
-				String key = REDIS_BASE_URL + "机械工业出版社";
-				jedisClient.sadd(key, item.getItemId().toString());
-			}
+			String presskey = REDIS_BASE_URL + item.getItemPress();
+			jedisClient.sadd(presskey, item.getItemId().toString());
 			
 			//price
 			String pkey = "";
@@ -74,13 +66,8 @@ public class ItemServiceImpl implements ItemService {
 			jedisClient.sadd(pkey, item.getItemId().toString());
 			
 			//pack
-			if(item.getItemPack().contains("平装")){
-				String key = REDIS_BASE_URL + "平装";
-				jedisClient.sadd(key, item.getItemId().toString());
-			}else{
-				String key = REDIS_BASE_URL + "精装";
-				jedisClient.sadd(key, item.getItemId().toString());
-			}
+			String packkey = REDIS_BASE_URL + item.getItemPack();
+			jedisClient.sadd(packkey, item.getItemId().toString());
 			
 			//grade
 			String key = REDIS_BASE_URL + "grade_" + item.getItemGrade();
@@ -129,13 +116,32 @@ public class ItemServiceImpl implements ItemService {
 			gkey = REDIS_BASE_URL + "grade_" + grade;
 			keys.add(gkey);
 		}
+
 		String[] ks = new String[keys.size()];
 		for (int i=0; i<keys.size(); i++) {
 			System.out.println(i + ":" + keys.get(i));
 			ks[i] = keys.get(i);
 		}
+		
+		long t3 = System.currentTimeMillis();
 		Set<String> set = jedisClient.sinter(ks);
-		List<TbItem> list = jedisClient.get(set);
+		
+		long t4 = System.currentTimeMillis();
+		System.out.println("取交集并集用时：" + (t4-t3));
+		
+		int count = set.size() > 10 ? 10 : set.size();
+		Set<String> s = new HashSet<>();
+		int i = 0;
+		Iterator<String> it = set.iterator();
+		while(i < count && it.hasNext()){
+			s.add(it.next());
+			i++;
+		}
+		
+		long time1 = System.currentTimeMillis();
+		List<TbItem> list = jedisClient.get(s);
+		long time2 = System.currentTimeMillis();
+		System.out.println("查询商品用时："+(time2-time1));
 		return ACEResult.ok(list);
 	}
 

@@ -1,2 +1,2 @@
-0:0:0:0:0:0:0:1 - - [07/Jul/2017:12:41:42 +0800] "GET /user/push HTTP/1.1" 200 48 http-bio-8080-exec-1 555
-0:0:0:0:0:0:0:1 - - [07/Jul/2017:12:41:44 +0800] "GET /user/q?category=Java&press=%E4%BA%BA%E6%B0%91%E9%82%AE%E7%94%B5%E5%87%BA%E7%89%88%E7%A4%BE&grade=4&price=59 HTTP/1.1" 200 265 http-bio-8080-exec-3 52
+0:0:0:0:0:0:0:1 - - [07/Jul/2017:19:27:48 +0800] "GET /item/q?category=Java&press=%E4%BA%BA%E6%B0%91%E9%82%AE%E7%94%B5%E5%87%BA%E7%89%88%E7%A4%BE& HTTP/1.1" 200 2274 http-bio-8080-exec-1 236
+0:0:0:0:0:0:0:1 - - [07/Jul/2017:19:27:52 +0800] "GET /item/q?category=Java&press=%E4%BA%BA%E6%B0%91%E9%82%AE%E7%94%B5%E5%87%BA%E7%89%88%E7%A4%BE& HTTP/1.1" 200 2274 http-bio-8080-exec-3 17

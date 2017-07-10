@@ -5,11 +5,11 @@ com/tomoto/pojo/TbItemExample$GeneratedCriteria.class
 com/tomoto/service/ItemService.class
 com/tomoto/utils/APIResult.class
 com/tomoto/utils/APIUtil.class
+com/tomoto/controller/ItemController.class
 com/tomoto/pojo/TbItemExample$Criterion.class
 com/tomoto/service/impl/ItemServiceImpl.class
 com/tomoto/utils/JsonUtils.class
 com/tomoto/mapper/TbItemMapper.class
-com/tomoto/controller/UserController.class
 com/tomoto/utils/ACEResult.class
 com/tomoto/dao/impl/JedisClientSingle.class
 com/tomoto/utils/IDUtils.class

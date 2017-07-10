@@ -68,8 +68,12 @@ public class ItemController {
 		if(pack != null){
 			pack = dealCode(pack);
 		}
+		long time1 = System.currentTimeMillis();
+		ACEResult result = service.searchItem(category, press, price, pack, grade);
+		long time2 = System.currentTimeMillis();
+		System.out.println("所有用时：" +(time2-time1));
 		
-		return service.searchItem(category, press, price, pack, grade);
+		return result;
 	}
 	
 	private static String dealCode(String code) throws UnsupportedEncodingException{
