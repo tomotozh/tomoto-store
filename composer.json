@@ -1,0 +1,14 @@
+{
+    "name": "tomoto/tomoto-store",
+    "description": "Small search server based on Redis",
+    "type": "project",
+    "license": "1",
+    "authors": [
+        {
+            "name": "tomoto",
+            "email": "tomoto_zh@163.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
